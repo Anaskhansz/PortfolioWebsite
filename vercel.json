@@ -1,0 +1,43 @@
+{
+  "version": 2,
+  "builds": [
+    {
+      "src": "index.js",
+      "use": "@vercel/node"
+    },
+    {
+      "src": "dist/**",
+      "use": "@vercel/static"
+    },
+    {
+      "src": "public/**",
+      "use": "@vercel/static"
+    }
+  ],
+  "routes": [
+    {
+      "src": "/auth",
+      "dest": "index.js"
+    },
+    {
+      "src": "/auth/(.*)",
+      "dest": "index.js"
+    },
+    {
+      "src": "/email",
+      "dest": "index.js"
+    },
+    {
+      "src": "/",
+      "dest": "dist/index.html"
+    },
+    {
+      "src": "/(.+)",
+      "dest": "dist/$1"
+    },
+    {
+      "src": "/public/(.*)",
+      "dest": "public/$1"
+    }
+  ]
+}
