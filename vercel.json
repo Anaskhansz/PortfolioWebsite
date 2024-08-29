@@ -28,16 +28,16 @@
       "dest": "index.js"
     },
     {
-      "src": "/",
-      "dest": "dist/index.html"
-    },
-    {
-      "src": "/(.+)",
-      "dest": "dist/$1"
-    },
-    {
       "src": "/public/(.*)",
-      "dest": "public/$1"
+      "dest": "/public/$1"
+    },
+    {
+      "src": "/dist/(.*)",
+      "dest": "/dist/$1"
+    },
+    {
+      "src": "/(.*)",
+      "dest": "/dist/index.html"
     }
   ]
 }
