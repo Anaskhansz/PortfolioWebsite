@@ -27,16 +27,13 @@
       "src": "/email",
       "dest": "/index.js"
     },
-    {
-      "src": "/public/(.*)",
-      "dest": "/public/$1"
-    },
+
     {
       "src": "/assets/(.*)",
       "dest": "/dist/assets/$1"
     },
     {
-      "src": "/images/(.*)",
+      "src": "/(.*)",
       "dest": "/dist/$1"
     },
     {
