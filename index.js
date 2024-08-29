@@ -10,7 +10,7 @@ let app = express();
 let PORT = 8000;
 
 app.use(cors());
-pp.use(express.static(path.join(__dirname, "dist")));
+app.use(express.static(path.join(__dirname, "dist")));
 app.use(express.json());
 app.use("/auth", authRouter);
 app.use("/email", emailRouter);
