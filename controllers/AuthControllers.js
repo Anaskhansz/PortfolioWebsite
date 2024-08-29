@@ -39,9 +39,12 @@ let login = async (req, res) => {
     let jwtToken = jwt.sign({ email }, process.env.SECRET_KEY, {
       expiresIn: process.env.JWT_EXPIRATION_TIME,
     });
-    res
-      .status(200)
-      .json({ message: "Login successful", success: true, jwtToken });
+    res.status(200).json({
+      message: "Login successful",
+      success: true,
+      jwtToken,
+      username: user.name,
+    });
   } catch (error) {
     console.error(error);
     res.status(500).json({ message: "Internal Server Error", success: false });
@@ -49,7 +52,7 @@ let login = async (req, res) => {
 };
 let refresh = async (req, res) => {
   try {
-    const { token } = req.body;
+    const token = req.body.token;
     jwt.verify(token, process.env.SECRET_KEY, (err, decoded) => {
       if (err) {
         return res
@@ -63,4 +66,35 @@ let refresh = async (req, res) => {
     res.status(500).json({ success: false, message: "Internal Server Error" });
   }
 };
-module.exports = { signup, login, refresh };
+
+const deleteAccount = (req, res) => {
+  const token = req.body.token;
+
+  // Verify the token using callbacks
+  jwt.verify(token, process.env.SECRET_KEY, async (err, decoded) => {
+    if (err) {
+      return res.status(401).json({ message: "Invalid token", success: false });
+    }
+
+    const email = decoded.email;
+
+    // Find and remove the user associated with the token's email
+    let user = await User.findOneAndDelete({ email });
+    // if (err) {
+    //   console.error(err);
+    //   return res
+    //     .status(500)
+    //     .json({ message: "Error deleting account", success: false });
+    // }
+
+    if (!user) {
+      return res
+        .status(404)
+        .json({ message: "User not found", success: false });
+    }
+
+    res.json({ message: "User deleted successfully", success: true });
+  });
+};
+
+module.exports = { signup, login, refresh, deleteAccount };
