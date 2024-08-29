@@ -33,7 +33,7 @@
     },
     {
       "src": "/assets/(.*)",
-      "dest": "/dist/$1"
+      "dest": "/dist/assets/$1"
     },
     {
       "src": "/(.*)",
